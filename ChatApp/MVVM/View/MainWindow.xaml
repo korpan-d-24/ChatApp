@@ -5,42 +5,111 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChatApp" xmlns:viewmodel="clr-namespace:ChatClient.MVVM.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="474" Width="816">
+        Height="650" Width="1200"
+        Background="#36393F"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        ResizeMode="CanResizeWithGrip">
 
     <Window.DataContext>
         <viewmodel:MainViewModel />
     </Window.DataContext>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <DockPanel>
-            <TextBox Height="25"
+        <Border Grid.ColumnSpan="2"
+                Background="#252525"
+                MouseDown="Border_MouseDown">
+
+            <Grid HorizontalAlignment="Stretch">
+                <Label Content="Chat Application"
+                       Foreground="Gray"
+                       FontWeight="SemiBold"/>
+
+                <StackPanel HorizontalAlignment="Right"
+                            Orientation="Horizontal">
+
+                    <Button Width="20" Height="20"
+                            Content="🗕"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Foreground="Gray"
+                            FontWeight="Bold"
+                            Margin="0,0,0,3"
+                            Click="ButtonMinimize_Click"/>
+
+                    <Button Width="20" Height="20"
+                            Content="☐"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Foreground="Gray"
+                            FontWeight="Bold"
+                            Click="WindiwStateButton_Click"/>
+
+                    <Button Width="20" Height="20"
+                            Content="X"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Foreground="Gray"
+                            FontWeight="Bold"
+                            Click="CloseButton_Click"/>
+                </StackPanel>
+            </Grid>
+            
+        </Border>
+
+        
+
+        
+
+        <Grid Background="#2F3136"
+              Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition/>
+                <RowDefinition Height="60"/>
+            </Grid.RowDefinitions>
+
+            <DockPanel>
+                <TextBox Height="25"
+                         Background="#2F3136"
+                         Foreground="White"
                        DockPanel.Dock="Top"
                        Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"/>
-            <Button Height="25"
+                <Button Height="25"
                     DockPanel.Dock="Top"
                     Content="Connect" 
                     Command="{Binding ConnectToServerComand}"/>
-            <ListView ItemsSource="{Binding Users}">
+                
+            </DockPanel>
+            <ListView ItemsSource="{Binding Username, UpdateSourceTrigger=PropertyChanged}"
+                      Background="Transparent"
+                      BorderThickness="0"
+                      Grid.Row="1">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Username}"/>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            
-        </DockPanel>
-
-        <StackPanel Grid.Column="1">
-            <ListView Height="380"
+        </Grid>
+        <StackPanel Grid.Column="1" Grid.Row="1">
+            <ListView Height="580"
+                      Background="#36393F"
+                      Foreground="White"
                       ItemsSource="{Binding Messages}"/>
 
             <StackPanel Orientation="Horizontal">
                 <TextBox Height="55"
-                         Width="545"
+                         Width="945"
                      VerticalContentAlignment="Center"
                          Text="{Binding Message, UpdateSourceTrigger=PropertyChanged}"/>
 
@@ -48,7 +117,8 @@
                         Content="Send"
                         Command="{Binding SendMessageComand}"/>
             </StackPanel>
-            
         </StackPanel>
+
+
     </Grid>
 </Window>
